@@ -30,6 +30,14 @@ function add_bold_text(element, text) {
   return strong
 }
 
+function add_big_text(element, text) {
+  strong = document.createElement("strong")
+  strong.appendChild(node = document.createTextNode(text))
+  element.appendChild(strong)
+  strong.classList.add("bigtext")
+  return strong
+}
+
 async function get_move_attacking_type(move_name) {
   move = await PokeAPI.getMoveByName(move_name.toLowerCase().replace(/ /g,"-"))
   if (move.damage_class.name == "status") {
@@ -97,7 +105,8 @@ async function get_team_offense(team_set, dict) {
 
 async function generate_coverage_graph(map, ascending = true, title = "default") {
   wrapper = document.createElement("div")
-  add_bold_text(wrapper, title)
+  add_big_text(wrapper, title)
+  add_br(wrapper)
   list = []
   all_types.forEach((type) => {
     list.push({name: type, count: map[type]})
@@ -122,7 +131,7 @@ function add_e(outer, inner) {
 
 async function generate_defense_table() {
   wrapper = document.createElement("div")
-  add_bold_text(wrapper, "Defensive Matrix")
+  add_big_text(wrapper, "Defensive Matrix")
   add_br(wrapper)
   add_br(wrapper)
   table = document.createElement("table")
@@ -187,7 +196,7 @@ async function generate_defense_table() {
 
 async function generate_offense_table() {
   wrapper = document.createElement("div")
-  add_bold_text(wrapper, "Offensive Matrix")
+  add_big_text(wrapper, "Offensive Matrix")
   add_br(wrapper)
   add_br(wrapper)
   table = document.createElement("table")
