@@ -120,6 +120,7 @@ async function generate_coverage_graph(map, ascending = true, title = "default")
     element.count.forEach((pokemon_id) => {
       div.appendChild(get_pokemon_image(team_data[pokemon_id], true))
     })
+    div.classList.add("type-block")
     wrapper.appendChild(div)
   })
   return wrapper.outerHTML
@@ -156,7 +157,8 @@ async function generate_defense_table() {
     add_e(row, label)
     badge = get_type_badge(type)
     add_e(label, badge)
-    badge.classList.add("rowlabel")
+    label.style["vertical-align"] = "middle"
+    badge.style["margin-right"] = "8px"
     for (i = 0; i < team.length; i++) {
       coloring = document.createElement("td")
       coloring.classList.add("bordered")
@@ -261,7 +263,8 @@ async function generate_offense_table() {
     add_e(row, label)
     badge = get_type_badge(type)
     add_e(label, badge)
-    badge.classList.add("rowlabel")
+    label.style["vertical-align"] = "middle"
+    badge.style["margin-left"] = "8px"
   })
   return wrapper.outerHTML
 }
