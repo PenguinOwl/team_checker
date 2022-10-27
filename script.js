@@ -169,7 +169,7 @@ async function generate_defense_table() {
           break;
         case 2:
           coloring.style["background-color"] = "#a3ffa3"
-          add_bold_text(coloring, "½")
+          add_bold_text(coloring, "½").style["color"] = "white"
           break;
         case 1:
           coloring.style["background-color"] = "#009900"
