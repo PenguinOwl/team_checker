@@ -131,6 +131,7 @@ function add_e(outer, inner) {
 
 async function generate_defense_table() {
   wrapper = document.createElement("div")
+  wrapper.style.float = "right"
   add_big_text(wrapper, "Defensive Matrix")
   add_br(wrapper)
   add_br(wrapper)
