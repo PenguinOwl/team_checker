@@ -47,6 +47,60 @@ async function get_moveset_coverage(moveset) {
   return coverage
 }
 
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
+}
+
+async function get_team_defense(team_data, dict, counter_dict) {
+  count = {}
+  all_types.forEach((type) => {
+    count[type] = 0
+  })
+  team_data.forEach((pokemon) => {
+    types = pokemon.types.map((e) => e.type.name)
+    enemy_types = []
+    if (types.length == 2) {
+      console.log(dict[types[0]].concat(dict[types[1]]))
+      merged_counter_list = counter_dict[types[0]].concat(counter_dict[types[1]])
+      enemy_types = dict[types[0]].concat(dict[types[1]]).filter(onlyUnique).filter((e) => !merged_counter_list.includes(e))
+    } else {
+      enemy_types = dict[types[0]].filter((e) => !counter_dict[types[0]].includes(e))
+    }
+    enemy_types.forEach((type) => {
+      if (!count[type]) {
+        count[type] = 0
+      }
+      count[type] += 1
+    })
+  })
+  return count
+}
+
+async function get_team_offense(team_set, dict) {
+  count = {}
+  all_types.forEach((type) => {
+    count[type] = 0
+  })
+  await team_set.forEach(async (pokemon) => {
+    types = await get_moveset_coverage(pokemon.moves)
+    enemy_types = []
+    types.forEach((type) => {
+      enemy_types = enemy_types.concat(dict[types])
+    })
+    enemy_types.forEach((type) => {
+      count[type] += 1
+    })
+  })
+  return count
+}
+
+async function generate_coverage_graph(map, ascending) {
+  list = []
+  all_types.forEach((type) => {
+    list.push({name: type, count: map[type]})
+  })
+}
+
 async function generate_pokedata(pokemon, pokemon_data) {
   div = document.createElement("div")
   namebox = document.createElement("div")
@@ -72,14 +126,57 @@ async function generate_pokedata(pokemon, pokemon_data) {
   add_br(div)
   coverage = await get_moveset_coverage(pokemon.moves)
   coverage.forEach((type) => {
-    console.log(coverage)
     movebox.appendChild(get_type_badge(type))
   })
   div.appendChild(movebox)
   return div.outerHTML
 }
 
+all_types = []
+offensive_coverage = {}
+offensive_blinds = {}
+defensive_coverage = {}
+defensive_blinds = {}
+
+function add_types(type_dict, base_type, type_list) {
+  types = type_list.map((e) => e.name)
+  types.forEach((type) => {
+    type_dict[base_type].push(type)
+  })
+}
+
+function initialize_type_dict(type_dict) {
+  all_types.forEach((type) => {
+    type_dict[type] = []
+  })
+}
+
+async function generate_type_tables() {
+  results = await PokeAPI.getTypesList()
+  for (i = 0; i < 18; i++) {
+    base_type = results.results[i].name
+    all_types.push(base_type)
+  }
+  initialize_type_dict(offensive_coverage)
+  initialize_type_dict(offensive_blinds)
+  initialize_type_dict(defensive_coverage)
+  initialize_type_dict(defensive_blinds)
+  for (i = 0; i < 18; i++) {
+    base_type = results.results[i].name
+    all_type_data = await PokeAPI.getTypeByName(base_type)
+    type_data = all_type_data.damage_relations
+    add_types(offensive_coverage, base_type, type_data.double_damage_to)
+    add_types(offensive_blinds, base_type, type_data.half_damage_to)
+    add_types(offensive_blinds, base_type, type_data.no_damage_to)
+    add_types(defensive_coverage, base_type, type_data.half_damage_from)
+    add_types(defensive_coverage, base_type, type_data.no_damage_from)
+    add_types(defensive_blinds, base_type, type_data.double_damage_from)
+  }
+}
+
+var team
 var team_data
+const incarnates = ["tornadus", "thundurus", "landorus"]
 
 window.onload = () => {
   var text_input = document.getElementById("poke-input")
@@ -88,7 +185,11 @@ window.onload = () => {
     team_data = []
     for (var i = 0; i < team.length; i++) {
       pokemon = team[i]
-      team_data[i] = await PokeAPI.getPokemonByName(pokemon.name.toLowerCase())
+      pokemon_name = pokemon.name.toLowerCase()
+      if (incarnates.includes(pokemon_name)) {
+        pokemon_name = pokemon_name + "-incarnate"
+      }
+      team_data[i] = await PokeAPI.getPokemonByName(pokemon_name)
       get_poke(i+1).innerHTML = await generate_pokedata(pokemon, team_data[i])
     }
     for (var i = team.length; i < 6; i++) {
@@ -96,4 +197,5 @@ window.onload = () => {
       get_poke(i+1).innerHTML = ""
     }
   }
+  generate_type_tables()
 }
