@@ -395,6 +395,13 @@ async function render() {
       case "urshifu-gmax":
         pokemon_name = "urshifu-single-strike-gmax"
         break
+      case "indeedee-f":
+        pokemon_name = "indeedee-female"
+        break
+      case "indeedee-m":
+      case "indeedee":
+        pokemon_name = "indeedee-male"
+        break
     }
     team_data[i] = await PokeAPI.getPokemonByName(pokemon_name)
     get_poke(i+1).innerHTML = await generate_pokedata(pokemon, team_data[i])
