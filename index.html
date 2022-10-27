@@ -9,10 +9,46 @@
     <script src="https://unpkg.com/pokeapi-js-wrapper/dist/index.js"></script>
     <script src="https://cdn.rawgit.com/itsjavi/koffing/0.4.0/dist/koffing.min.js"></script>
     <script src="script.js"></script>
-    <style></style>
+    <style>
+      html {
+        margin: 10px;
+        background-color: #f9f9f9;
+      }
+      td {
+        padding: 2px;
+        font-size: 24px;
+        text-align: center !important;
+      }
+      .rowlabel {
+        display: block;
+        vertical-align: center;
+        margin-right: 5px;
+      }
+      .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+      .bordered {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      .page {
+        max-width: 65%;
+        float: right;
+      }
+      textarea {
+        position: fixed;
+        width: 30%;
+        height: 98%;
+        margin: 10px;
+      }
+    </style>
   </head>
   <body>
     <textarea id="poke-input"></textarea>
+    <div class="page">
     <div class="columns">
       <div id="poke1" class="column">
       </div>
@@ -29,10 +65,17 @@
     </div>
     <br>
     <div class="columns">
-      <div id="offensive" class="column">
+      <div id="defense-table" class="column"></div>
+      <div id="offense-table" class="column"></div>
+    </div>
+    <div class="columns">
+      <div id="offensive-coverage" class="column">
       </div>
-      <div id="defensive" class="column">
+      <div id="defensive-coverage" class="column">
       </div>
+      <div id="defensive-blindspots" class="column">
+      </div>
+    </div>
     </div>
   </body>
 </html>
