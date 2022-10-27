@@ -160,15 +160,15 @@ async function generate_defense_table() {
           add_bold_text(coloring, "1").style["color"] = "gray"
           break;
         case 16:
-          coloring.style["background-color"] = "#ff1a1a"
+          coloring.style["background-color"] = "#b00000"
           add_bold_text(coloring, "4").style["color"] = "white"
           break;
         case 8:
-          coloring.style["background-color"] = "#ff8080"
+          coloring.style["background-color"] = "#ff5050"
           add_bold_text(coloring, "2").style["color"] = "white"
           break;
         case 2:
-          coloring.style["background-color"] = "#a3ffa3"
+          coloring.style["background-color"] = "#29d946"
           add_bold_text(coloring, "½").style["color"] = "white"
           break;
         case 1:
@@ -234,7 +234,7 @@ async function generate_offense_table() {
           add_bold_text(coloring, "2").style["color"] = "white"
           break;
         case 2:
-          coloring.style["background-color"] = "#ff8080"
+          coloring.style["background-color"] = "#ff5050"
           add_bold_text(coloring, "½").style["color"] = "white"
           break;
         case 1:
@@ -384,7 +384,7 @@ async function render() {
   team_data = []
   for (var i = 0; i < team.length; i++) {
     pokemon = team[i]
-    pokemon_name = pokemon.name.toLowerCase()
+    pokemon_name = pokemon.name.toLowerCase().replace(/ /g,"-")
     if (incarnates.includes(pokemon_name)) {
       pokemon_name = pokemon_name + "-incarnate"
     }
