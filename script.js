@@ -213,9 +213,7 @@ async function generate_offense_table() {
     part = document.createElement("th")
     add_e(header_row, part)
     add_e(part, get_pokemon_image(team_data[i], false))
-    console.log(team[i].moves)
     coverage_table[i] = await get_moveset_coverage(team[i].moves)
-    console.log(coverage_table)
   }
   add_e(header_row, document.createElement("th"))
   tbody = document.createElement("tbody")
@@ -231,7 +229,6 @@ async function generate_offense_table() {
       coloring.style.width = "40px"
       effectiveness_array = coverage_table[i].map((e) => get_effectiveness(e, [type]))
       effectiveness = effectiveness_array.reduce((a, b) => Math.max(a, b), -Infinity);
-      console.log(effectiveness_array)
       switch(effectiveness) {
         case 4:
           coloring.style["background-color"] = "#f3f3ee"
