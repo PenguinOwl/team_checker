@@ -405,6 +405,12 @@ async function render() {
       case "urshifu-gmax":
         pokemon_name = "urshifu-single-strike-gmax"
         break
+      case "darmanitan":
+        pokemon_name = "darmanitan-standard"
+        break
+      case "darmanitan-galar":
+        pokemon_name = "darmanitan-galar-standard"
+        break
       case "indeedee-f":
         pokemon_name = "indeedee-female"
         break
