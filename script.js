@@ -418,6 +418,12 @@ async function render() {
       case "indeedee":
         pokemon_name = "indeedee-male"
         break
+      case "necrozma-dusk-mane":
+        pokemon_name = "necrozma-dusk"
+        break
+      case "necrozma-dawn-wings":
+        pokemon_name = "necrozma-dawn"
+        break
     }
     team_data[i] = await PokeAPI.getPokemonByName(pokemon_name)
     get_poke(i+1).innerHTML = await generate_pokedata(pokemon, team_data[i])
