@@ -395,6 +395,7 @@ async function render() {
   for (var i = 0; i < team.length; i++) {
     pokemon = team[i]
     pokemon_name = pokemon.name.toLowerCase().replace(/ /g,"-")
+    pokemon_name = pokemon_name.replace(/\./g,"")
     if (incarnates.includes(pokemon_name)) {
       pokemon_name = pokemon_name + "-incarnate"
     }
