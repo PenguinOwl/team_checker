@@ -57,11 +57,14 @@
       }
       #poke-input {
         width: 100%;
-        height: 100%;
+        height: 80%;
       }
       #poke-input2 {
         width: 100%;
         height: 20%;
+      }
+      #matchup-table {
+        display: flex;
       }
       ::placeholder {
         font-size: 18px;
@@ -72,7 +75,7 @@
   <body>
     <div class="fixed-input">
     <textarea id="poke-input" placeholder=" Paste Showdown team here"></textarea>
-    <textarea id="poke-input2" hidden=true placeholder=" Paste enemy team here"></textarea>
+    <textarea id="poke-input2" placeholder=" Paste enemy team here"></textarea>
     </div>
     <div class="page">
     <div class="columns">
@@ -90,6 +93,9 @@
       </div>
     </div>
     <br>
+    <div class="columns">
+      <div id="matchup-table" class="column"></div>
+    </div>
     <div class="columns">
       <div id="defense-table" class="column"></div>
       <div id="offense-table" class="column"></div>
